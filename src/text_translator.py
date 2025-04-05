@@ -5,7 +5,8 @@ class TextTranslator:
     def __init__(self):
         pass
 
-    def translate_text(self, text):
+    @staticmethod
+    def translate_text(text):
         """
         Переводит текст с помощью Google Translator.
         :param text: Текст для перевода.
@@ -21,6 +22,7 @@ class TextTranslator:
 # Пример использования:
 if __name__ == "__main__":
     translator = TextTranslator()
-    original_text = "Hi, how are you?"
+    # original_text = "Hi, how are you?"
+    original_text = 'ham,"Go until jurong point, crazy.. Available only in bugis n great world la e buffet... Cine there got amore wat..."'
     translated_text = translator.translate_text(original_text)
     print(f"Перевод: {translated_text}")
