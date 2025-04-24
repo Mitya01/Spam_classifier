@@ -3,17 +3,17 @@ import nltk
 from nltk.corpus import stopwords
 from pymorphy3 import MorphAnalyzer
 
-# загружаются стоп-слова
+# Downloading stop words
 nltk.download('stopwords')
 
 
 class TextProcessor:
     """
-    Класс для обработки и нормализации русского текста.
+    A class for processing and normalizing Russian text.
     """
     def __init__(self):
         """
-        Инициализация класса
+        Initializing a class
         """
         self.morph = MorphAnalyzer()
         self.stop_words = set(stopwords.words('russian'))
@@ -21,9 +21,9 @@ class TextProcessor:
     @staticmethod
     def clean_special_chars(text):
         """
-        Очистка текста от спецсимволов, URL-адресов, HTML-тегов и чисел.
-        :param text: исходный текст
-        :return:
+        Clearing text from special characters, URLs, HTML tags, and numbers.
+        :param text: Source text.
+        :return: text: Text consisting of words only.
         """
         text = re.sub(r'http\S+|<.*?>|[^\w\s]|\d+', '', text)
         return text
@@ -31,64 +31,64 @@ class TextProcessor:
     @staticmethod
     def tokenize_text(text):
         """
-        Токенизация текста на отдельные слова
-        :param text: Исходный текст
-        :return:
+        Tokenization of text into individual words
+        :param text: Source text.
+        :return: words: Space-separated text.
         """
         words = [word for word in text.split()]
         return words
 
     def remove_stop_words(self, words):
         """
-        Удаление стоп-слов из списка слов.
-        :param words: Список слов
-        :return:
+        Removing stop words from the word list.
+        :param words: A list of words.
+        :return: The list in which the stop words are deleted.
         """
         return [word for word in words if word not in self.stop_words]
 
     def lemmatizate_words(self, words):
         """
-        Лемматизация слов до их базовой формы.
-        :param words: Список слов
-        :return:
+        Lemmatization of words to their basic form.
+        :param words: A list of words.
+        :return: lemmatizated_words: Words after lemmatization.
         """
         lemmatizated_words = []
         for word in words:
             parses = self.morph.parse(word)
             if parses:
-                # Используем первую нормальную форму
+                # Using the first normal form
                 lemmatizated_word = parses[0].normal_form
                 lemmatizated_words.append(lemmatizated_word)
             else:
-                # Если слово не найдено, оставляем его как есть
+                # If the word is not found, leave it as it is.
                 lemmatizated_words.append(word)
         return lemmatizated_words
 
     def process_text(self, text):
         """
-        Полная обработка текста: очистка, токенизация, удаление стоп-слов и лемматизация.
-        :param text: Исходный текст
-        :return:
+        Full text processing: cleaning of special characters, tokenization, removal of stop words and lemmatization.
+        :param text: Source text.
+        :return: processed_text: Processed text.
         """
-        # Очистка от спецсимволов
+        # Cleaning of special characters
         cleaned_text = self.clean_special_chars(text)
 
-        # Токенизация
+        # Tokenization
         tokens = self.tokenize_text(cleaned_text)
 
-        # Лемматизация
+        # Lemmatization
         lemmatized_tokens = self.lemmatizate_words(tokens)
 
-        # Удаление стоп-слов
+        # Removal of stop words
         filtered_tokens = self.remove_stop_words(lemmatized_tokens)
 
-        # Объединение слов обратно в текст
+        # Combining words back into text
         processed_text = " ".join(filtered_tokens)
 
         return processed_text
 
 
-# Пример использования
+# Usage example
 if __name__ == "__main__":
     processor = TextProcessor()
 

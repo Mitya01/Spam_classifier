@@ -8,9 +8,9 @@ class TextTranslator:
     @staticmethod
     def translate_text(text):
         """
-        Переводит текст с помощью Google Translator.
-        :param text: Текст для перевода.
-        :return: Переведенный текст.
+        Translates text using Google Translator.
+        :param text: The text to translate.
+        :return: Translated text.
         """
         try:
             translator = GoogleTranslator(source='en', target='ru')
@@ -19,7 +19,7 @@ class TextTranslator:
             print(f"Ошибка перевода: {e}")
             return None
 
-# Пример использования:
+# Usage example:
 if __name__ == "__main__":
     translator = TextTranslator()
     # original_text = "Hi, how are you?"
