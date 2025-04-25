@@ -2,9 +2,10 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from pymorphy3 import MorphAnalyzer
+import pandas as pd
 
-# Downloading stop words
-nltk.download('stopwords')
+# Downloading stop words, 1 time is enough
+# nltk.download('stopwords')
 
 
 class TextProcessor:
@@ -25,6 +26,8 @@ class TextProcessor:
         :param text: Source text.
         :return: text: Text consisting of words only.
         """
+        if pd.isna(text) or not isinstance(text, (str, bytes)):
+            return ""
         text = re.sub(r'http\S+|<.*?>|[^\w\s]|\d+', '', text)
         return text
 
@@ -70,6 +73,7 @@ class TextProcessor:
         :param text: Source text.
         :return: processed_text: Processed text.
         """
+
         # Cleaning of special characters
         cleaned_text = self.clean_special_chars(text)
 
