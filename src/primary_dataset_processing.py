@@ -22,13 +22,21 @@ class TextProcessor:
     @staticmethod
     def clean_special_chars(text):
         """
-        Clearing text from special characters, URLs, HTML tags, and numbers.
+        Clearing text from URLs, special characters, special lines and numbers
+
         :param text: Source text.
-        :return: text: Text consisting of words only.
+        :return: Text consisting of words only.
         """
         if pd.isna(text) or not isinstance(text, (str, bytes)):
             return ""
-        text = re.sub(r'http\S+|<.*?>|[^\w\s]|\d+', '', text)
+
+        # Remove http/https URLs
+        text = re.sub(r'https?://\S+|www\.\S+', '', text, flags=re.IGNORECASE)
+        # Remove special lines like "& lt;#& gt;" and "& lt; url & gt;"
+        text = re.sub(r'&\s*lt;\s*.*?\s*&\s*gt;', '', text, flags=re.IGNORECASE)
+        # Remove special characters and numbers (keep only letters and whitespace)
+        text = re.sub(r'[^\w\s]|\d+', '', text)
+
         return text
 
     @staticmethod
