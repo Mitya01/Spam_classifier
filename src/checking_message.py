@@ -69,9 +69,10 @@ if __name__ == "__main__":
 
     classifier = SpamClassifier()
     classifier.train(X_train, y_train)
+    # Performs a quality assessment of the trained model based on test data
     classifier.evaluate(X_test, y_test)
 
-    test_message = "Выиграйте 1000000 фунт стерлингов, деньги прямо сейчас! Звоните 88005553535"
+    test_message = input()
     processor = TextProcessor()
     processed_text = processor.process_text(test_message)
     result = classifier.predict_message(processed_text)
