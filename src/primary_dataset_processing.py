@@ -4,9 +4,6 @@ from nltk.corpus import stopwords
 from pymorphy3 import MorphAnalyzer
 import pandas as pd
 
-# Downloading stop words, 1 time is enough
-nltk.download('stopwords')
-
 
 class TextProcessor:
     """
